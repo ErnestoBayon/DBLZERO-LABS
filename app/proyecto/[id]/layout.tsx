@@ -28,11 +28,11 @@ export default async function ProjectLayout({
     <>
     <div className="min-h-screen">
       {/* Navbar simple */}
-      <nav className="border-b border-line bg-surface">
+      <nav className="border-b border-line bg-panel">
         <div className="mx-auto flex max-w-6xl items-center px-6 py-4">
           <Link
             href="/home"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors duration-200 ease-out hover:text-ink"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-dim transition-colors duration-200 ease-out hover:text-ink"
           >
             <span aria-hidden>←</span> Projects
           </Link>
@@ -53,7 +53,7 @@ export default async function ProjectLayout({
             </h1>
           </div>
           {project.descripcion && (
-            <div className="mt-2 max-h-28 max-w-2xl overflow-y-auto rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-sm leading-relaxed text-gray-500">
+            <div className="mt-2 max-h-28 max-w-2xl overflow-y-auto rounded-lg border border-line bg-raise px-3 py-2 text-sm leading-relaxed text-dim">
               {project.descripcion}
             </div>
           )}

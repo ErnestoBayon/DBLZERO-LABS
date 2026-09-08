@@ -32,8 +32,8 @@ export default function TopNav() {
             href={l.href}
             aria-current={active ? "page" : undefined}
             className={[
-              "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-base font-medium transition-colors duration-200 ease-out",
-              active ? "bg-accent/10 text-accent" : "text-muted hover:text-ink",
+              "inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-mono text-sm font-medium transition-colors duration-200 ease-out",
+              active ? "bg-accent/10 text-ink" : "text-dim hover:text-ink",
             ].join(" ")}
           >
             {l.icon}

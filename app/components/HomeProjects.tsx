@@ -49,13 +49,44 @@ export default function HomeProjects({
     }
   }
 
+  const tasksDone = Object.values(taskCounts).reduce((sum, c) => sum + c.done, 0);
+  const tasksTotal = Object.values(taskCounts).reduce((sum, c) => sum + c.total, 0);
+  const tasksPending = tasksTotal - tasksDone;
+
   return (
     <>
+      {projects.length > 0 && (
+        <div className="mt-8 flex items-start justify-between gap-4">
+          <div className="grid flex-1 grid-cols-3 gap-4">
+            {[
+              { label: "// PROJECTS ACTIVE", value: projects.length, sublabel: null },
+              { label: "// TASKS PENDING", value: tasksPending, sublabel: `of ${tasksTotal} total tasks` },
+              { label: "// TASKS COMPLETED", value: tasksDone, sublabel: `of ${tasksTotal} total tasks` },
+            ].map((stat) => (
+              <div key={stat.label} className="rounded-xl border border-line bg-panel px-4 py-3">
+                <p className="font-mono text-[10px] uppercase tracking-wide text-faint">{stat.label}</p>
+                <p className="mt-1 font-mono text-2xl font-semibold text-ink">{stat.value}</p>
+                {stat.sublabel && (
+                  <p className="mt-1 font-mono text-[10px] text-faint">{stat.sublabel}</p>
+                )}
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setModalOpen(true)}
+            className="flex shrink-0 items-center gap-1.5 rounded border border-line px-3 py-1.5 font-mono text-xs text-dim transition-colors duration-200 ease-out hover:border-accent hover:text-ink"
+          >
+            <span aria-hidden>+</span> new project
+          </button>
+        </div>
+      )}
+
       {projects.length === 0 ? (
         <div className="mx-auto mt-12 max-w-lg">
           <div className="text-center">
-            <h2 className="text-2xl font-bold tracking-tight text-ink">Welcome to Pathfinder</h2>
-            <p className="mt-2 text-sm text-muted">
+            <h2 className="text-2xl font-bold tracking-tight text-ink">Welcome to dblzero</h2>
+            <p className="mt-2 text-sm text-dim">
               Your AI project manager for planning, prioritizing, and shipping.
             </p>
           </div>
@@ -68,7 +99,7 @@ export default function HomeProjects({
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="w-full max-w-xs rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 ease-out hover:bg-accent-hover"
+              className="w-full max-w-xs bg-cta px-5 py-2.5 text-sm font-semibold text-[#0A0A0A] transition-colors duration-200 ease-out hover:bg-cta-hover"
             >
               Create your first project
             </button>
@@ -76,7 +107,7 @@ export default function HomeProjects({
               type="button"
               onClick={handleSeedDemo}
               disabled={seeding}
-              className="w-full max-w-xs rounded-lg border border-line bg-surface px-5 py-2.5 text-sm font-medium text-ink transition-colors duration-200 ease-out hover:border-accent hover:text-accent disabled:opacity-50"
+              className="w-full max-w-xs rounded-lg border border-line bg-panel px-5 py-2.5 text-sm font-medium text-ink transition-colors duration-200 ease-out hover:border-accent hover:text-accent disabled:opacity-50"
             >
               {seeding ? "Loading example…" : "Explore an example project"}
             </button>
@@ -84,7 +115,7 @@ export default function HomeProjects({
           </div>
         </div>
       ) : (
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (
             <ProjectCard
               key={p.id}

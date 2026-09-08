@@ -152,10 +152,10 @@ export default function SubtaskList({
       {/* Barra de progreso: solo si hay subtareas. */}
       {total > 0 && (
         <div className="flex items-center gap-2">
-          <span className="shrink-0 text-xs tabular-nums text-muted">
+          <span className="shrink-0 text-xs tabular-nums text-dim">
             {done} / {total}
           </span>
-          <div className="h-1 flex-1 overflow-hidden rounded-full bg-canvas">
+          <div className="h-1 flex-1 overflow-hidden rounded-full bg-base">
             <div
               className="h-full rounded-full bg-done transition-all duration-200 ease-out"
               style={{ width: `${pct}%` }}
@@ -170,7 +170,7 @@ export default function SubtaskList({
           {subtasks.map((sub) => (
             <li
               key={sub.id}
-              className="group/sub flex items-center gap-2.5 rounded-md px-1.5 py-1 transition-colors duration-200 ease-out hover:bg-canvas"
+              className="group/sub flex items-center gap-2.5 rounded-md px-1.5 py-1 transition-colors duration-200 ease-out hover:bg-base"
             >
               {/* Checkbox cuadrado (vs. el círculo de las tareas): se rellena de verde al completar. */}
               <button
@@ -205,7 +205,7 @@ export default function SubtaskList({
               <span
                 className={[
                   "min-w-0 flex-1 break-words text-sm leading-snug transition-colors duration-200 ease-out",
-                  sub.completed ? "text-muted line-through" : "text-ink",
+                  sub.completed ? "text-dim line-through" : "text-ink",
                 ].join(" ")}
               >
                 {sub.title}
@@ -214,7 +214,7 @@ export default function SubtaskList({
                 type="button"
                 onClick={() => void remove(sub)}
                 aria-label="Delete subtask"
-                className="shrink-0 px-1 text-sm leading-none text-muted opacity-0 transition-opacity duration-200 ease-out hover:text-ink group-hover/sub:opacity-100"
+                className="shrink-0 px-1 text-sm leading-none text-dim opacity-0 transition-opacity duration-200 ease-out hover:text-ink group-hover/sub:opacity-100"
               >
                 ×
               </button>
@@ -234,7 +234,7 @@ export default function SubtaskList({
         <select
           value={newPrioridad}
           onChange={(e) => setNewPrioridad(e.target.value as Prioridad)}
-          className="shrink-0 rounded-md border border-line bg-surface px-1.5 py-1 text-xs text-ink outline-none transition-colors duration-200 ease-out focus:border-accent"
+          className="shrink-0 rounded-md border border-line bg-panel px-1.5 py-1 text-xs text-ink outline-none transition-colors duration-200 ease-out focus:border-accent"
         >
           {PRIORIDADES.map((p) => (
             <option key={p} value={p}>
@@ -246,7 +246,7 @@ export default function SubtaskList({
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           placeholder="Add subtask…"
-          className="min-w-0 flex-1 rounded-md border border-line bg-surface px-2 py-1 text-sm text-ink outline-none transition-colors duration-200 ease-out placeholder:text-muted focus:border-accent"
+          className="min-w-0 flex-1 rounded-md border border-line bg-panel px-2 py-1 text-sm text-ink outline-none transition-colors duration-200 ease-out placeholder:text-dim focus:border-accent"
         />
         <button
           type="submit"
@@ -259,14 +259,17 @@ export default function SubtaskList({
 
       {/* Auto-sugerencia: cerrar la tarea cuando todas las subtareas están hechas. */}
       {showDoneBanner && (
-        <div className="mt-1 flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
+        <div
+          className="mt-1 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm"
+          style={{ borderColor: "rgba(21,128,61,0.35)", backgroundColor: "rgba(21,128,61,0.12)", color: "#4ADE80" }}
+        >
           <span className="min-w-0 flex-1">
             ✓ All subtasks completed — mark task as done?
           </span>
           <button
             type="button"
             onClick={() => void markTaskDone()}
-            className="shrink-0 rounded-full bg-green-600 px-2.5 py-0.5 text-xs font-medium text-white transition-colors duration-200 ease-out hover:bg-green-700"
+            className="shrink-0 rounded-full bg-done px-2.5 py-0.5 text-xs font-medium text-white transition-opacity duration-200 ease-out hover:opacity-90"
           >
             Mark done
           </button>
@@ -274,7 +277,7 @@ export default function SubtaskList({
             type="button"
             onClick={() => setDismissed(true)}
             aria-label="Dismiss"
-            className="shrink-0 px-1 text-base leading-none text-green-700/70 transition-colors duration-200 ease-out hover:text-green-900"
+            className="shrink-0 px-1 text-base leading-none text-[#4ADE80]/70 transition-colors duration-200 ease-out hover:text-ink"
           >
             ×
           </button>
